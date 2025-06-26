@@ -1,6 +1,12 @@
 {
   "short_name": "CareerApp",
   "name": "Student Career Predictor",
+  "description": "A smart app to help students predict their best career path.",
+  "id": "/",
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#0f172a",
+  "background_color": "#ffffff",
   "icons": [
     {
       "src": "/logo192.png",
@@ -13,8 +19,18 @@
       "sizes": "512x512"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#0f172a",
-  "background_color": "#ffffff"
+  "screenshots": [
+    {
+      "src": "/screenshot1.jpg",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "narrow"
+    },
+    {
+      "src": "/screenshot2.avif",
+      "sizes": "1920x1080",
+      "type": "image/png",
+      "form_factor": "wide"
+    }
+  ]
 }
