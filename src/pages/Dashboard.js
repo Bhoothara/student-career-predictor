@@ -1,9 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
   const navigate = useNavigate();
   const [active, setActive] = useState("Career Prediction");
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleNavClick = (name, route) => {
     setActive(name);
@@ -11,44 +18,31 @@ const Dashboard = () => {
   };
 
   return (
-    <div style={styles.container}>
+    <div style={isMobile ? styles.containerMobile : styles.container}>
       {/* Sidebar */}
-      <aside style={styles.sidebar}>
+      <aside style={isMobile ? styles.sidebarMobile : styles.sidebar}>
         <div style={styles.logoBox}>
           <h2 style={styles.logo}>🎓</h2>
           <span style={styles.brand}>Career Predictor</span>
         </div>
-        <nav style={styles.nav}>
-          <div
-            style={{
-              ...styles.navItem,
-              ...(active === "Career Prediction" ? styles.activeItem : {}),
-            }}
-            onClick={() => handleNavClick("Career Prediction", "/stage-selection")}
-          >
-            <span style={styles.navIcon}>📈</span>
-            <span>Career Prediction</span>
-          </div>
-          <div
-            style={{
-              ...styles.navItem,
-              ...(active === "Reports" ? styles.activeItem : {}),
-            }}
-            onClick={() => handleNavClick("Reports")}
-          >
-            <span style={styles.navIcon}>📊</span>
-            <span>Reports</span>
-          </div>
-          <div
-            style={{
-              ...styles.navItem,
-              ...(active === "Settings" ? styles.activeItem : {}),
-            }}
-            onClick={() => handleNavClick("Settings")}
-          >
-            <span style={styles.navIcon}>⚙️</span>
-            <span>Settings</span>
-          </div>
+        <nav style={isMobile ? styles.navMobile : styles.nav}>
+          {["Career Prediction", "Reports", "Settings"].map((name) => (
+            <div
+              key={name}
+              style={{
+                ...styles.navItem,
+                ...(active === name ? styles.activeItem : {}),
+              }}
+              onClick={() =>
+                handleNavClick(name, name === "Career Prediction" ? "/stage-selection" : "")
+              }
+            >
+              <span style={styles.navIcon}>
+                {name === "Career Prediction" ? "📈" : name === "Reports" ? "📊" : "⚙️"}
+              </span>
+              <span>{name}</span>
+            </div>
+          ))}
         </nav>
       </aside>
 
@@ -83,10 +77,16 @@ const Dashboard = () => {
   );
 };
 
+// Base styles
 const styles = {
   container: {
     display: "flex",
     minHeight: "100vh",
+    fontFamily: "Segoe UI, sans-serif",
+    backgroundColor: "#f8f9fb",
+  },
+  containerMobile: {
+    display: "block",
     fontFamily: "Segoe UI, sans-serif",
     backgroundColor: "#f8f9fb",
   },
@@ -98,15 +98,20 @@ const styles = {
     flexDirection: "column",
     padding: "1.5rem 1rem",
   },
+  sidebarMobile: {
+    width: "100%",
+    backgroundColor: "#0f172a",
+    color: "#fff",
+    padding: "1rem",
+  },
   logoBox: {
     display: "flex",
     alignItems: "center",
     gap: "10px",
-    marginBottom: "2rem",
-    paddingLeft: "10px",
+    marginBottom: "1.5rem",
   },
   logo: {
-    fontSize: "2rem",
+    fontSize: "1.8rem",
     margin: 0,
   },
   brand: {
@@ -118,35 +123,43 @@ const styles = {
     flexDirection: "column",
     gap: "1rem",
   },
+  navMobile: {
+    display: "flex",
+    justifyContent: "space-around",
+    flexWrap: "wrap",
+    gap: "0.5rem",
+    marginBottom: "1rem",
+  },
   navItem: {
     display: "flex",
     alignItems: "center",
-    gap: "12px",
-    padding: "10px 16px",
+    gap: "10px",
+    padding: "10px 14px",
     borderRadius: "8px",
     cursor: "pointer",
     transition: "background 0.3s, transform 0.2s",
+    backgroundColor: "#1e293b",
   },
   navIcon: {
-    fontSize: "1.2rem",
+    fontSize: "1rem",
   },
   activeItem: {
-    backgroundColor: "#1e293b",
-    transform: "translateX(5px)",
+    backgroundColor: "#334155",
+    transform: "scale(1.02)",
   },
   main: {
-    flex: 1,
     padding: "2rem",
-    backgroundColor: "#f3f4f6",
   },
   topbar: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: "2rem",
+    flexWrap: "wrap",
+    gap: "1rem",
   },
   heading: {
-    fontSize: "1.8rem",
+    fontSize: "1.6rem",
     fontWeight: "600",
   },
   avatar: {
