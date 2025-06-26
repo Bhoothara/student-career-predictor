@@ -9,7 +9,7 @@ function SignupModal({ onClose, onSwitch }) {
   const signup = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post('http://localhost:8000/auth/signup', {
+      const res = await axios.post(`${process.env.REACT_APP_API_URL}/auth/signup`, {
         name,
         email,
         password
@@ -53,18 +53,17 @@ const modalStyles = {
     width: '100%', padding: '10px', backgroundColor: '#282c34', color: '#fff', border: 'none'
   },
   close: {
-  position: 'absolute',
-  top: '-20px',
-  right: '-150px',
-  backgroundColor: 'transparent',
-  color: '#444',
-  border: 'none',
-  fontSize: '1.5rem',
-  fontWeight: 'bold',
-  cursor: 'pointer',
-  lineHeight: '1',
-}
-
+    position: 'absolute',
+    top: '-20px',
+    right: '-150px',
+    backgroundColor: 'transparent',
+    color: '#444',
+    border: 'none',
+    fontSize: '1.5rem',
+    fontWeight: 'bold',
+    cursor: 'pointer',
+    lineHeight: '1',
+  }
 };
 
 export default SignupModal;
