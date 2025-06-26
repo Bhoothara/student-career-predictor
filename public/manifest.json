@@ -17,13 +17,18 @@
   "display": "standalone",
   "theme_color": "#0f172a",
   "background_color": "#ffffff",
-
   "screenshots": [
     {
       "src": "/screenshot1.png",
-      "sizes": "1080x720",
+      "sizes": "800x600",
       "type": "image/png",
       "form_factor": "wide"
+    },
+    {
+      "src": "/screenshot2.png",
+      "sizes": "400x800",
+      "type": "image/png",
+      "form_factor": "narrow"
     }
   ]
 }
